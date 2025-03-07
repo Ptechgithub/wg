@@ -1,5 +1,5 @@
 # wg
-wireguard Conifg Generator
+wireguard Config Generator
 
 [Ptechgithub.github.io/wg](https://Ptechgithub.github.io/wg)
 
