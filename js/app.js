@@ -9,14 +9,13 @@ const container = document.querySelector('.container');
 getConfigBtn.addEventListener('click', async () => {
     getConfigBtn.disabled = true;
     getConfigBtn.textContent = 'Generating...';
-    console.log('Button clicked!');
     try {
         showSpinner();
         const { publicKey, privateKey } = await fetchKeys();
         const installId = generateRandomString(22);
         const fcmToken = `${installId}:APA91b${generateRandomString(134)}`;
         const accountData = await fetchAccount(publicKey, installId, fcmToken);
-        if (accountData) generateConfig(accountData, privateKey);
+        if (accountData) await generateConfig(accountData, privateKey);
     } catch (error) {
         console.error('Error processing configuration:', error);
         showPopup('Failed to generate config. Please try again.', 'error');
@@ -24,7 +23,6 @@ getConfigBtn.addEventListener('click', async () => {
         hideSpinner();
         getConfigBtn.disabled = false;
         getConfigBtn.textContent = 'Get Free Config';
-        // Scroll to the config section after generating
         setTimeout(() => {
             if (wireGuardConfig.firstChild) {
                 wireGuardConfig.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -82,39 +80,57 @@ const fetchAccount = async (publicKey, installId, fcmToken) => {
     }
 };
 
+// Fetch random endpoint from remote API
+const fetchRandomEndpoint = async () => {
+    const fallback = 'engage.cloudflareclient.com:2408';
+    try {
+        const res = await fetch('https://raw.githubusercontent.com/ircfspace/endpoint/refs/heads/main/ip.json');
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        if (!Array.isArray(data.ipv4) || data.ipv4.length === 0) throw new Error("No IPv4 available");
+        const random = data.ipv4[Math.floor(Math.random() * data.ipv4.length)];
+        return random;
+    } catch (e) {
+        console.warn("Falling back to default endpoint:", e);
+        return fallback;
+    }
+};
+
 // Generate and Display Configurations
-const generateConfig = (data, privateKey) => {
+const generateConfig = async (data, privateKey) => {
     const reserved = generateReserved(data.config.client_id);
-    const wireGuardText = generateWireGuardConfig(data, privateKey);
+    const endpoint = await fetchRandomEndpoint();
+
+    const wireGuardText = generateWireGuardConfig(data, privateKey, endpoint);
     const v2rayText = generateV2RayURL(
         privateKey,
         data.config.peers[0].public_key,
         data.config.interface.addresses.v4,
-        data.config.interface.addresses.v6,
-        reserved
+        reserved,
+        endpoint
     );
+
     updateDOM(wireGuardConfig, 'WireGuard Format', 'wireguardBox', wireGuardText, 'message1');
     updateDOM(v2rayConfig, 'V2Ray Format', 'v2rayBox', v2rayText, 'message2');
     downloadBtn.style.display = 'block';
-    
-    // Add event listeners to newly created copy buttons
+
     document.querySelectorAll('.copy-button').forEach(btn => {
         btn.addEventListener('click', handleCopyButtonClick);
     });
 };
 
 // Generate WireGuard Configuration Text
-const generateWireGuardConfig = (data, privateKey) => `
+const generateWireGuardConfig = (data, privateKey, endpoint) => `
 [Interface]
 PrivateKey = ${privateKey}
-Address = ${data.config.interface.addresses.v4}/32, ${data.config.interface.addresses.v6}/128
-DNS = 1.1.1.1, 1.0.0.1, 2606:4700:4700::1111, 2606:4700:4700::1001
+Address = ${data.config.interface.addresses.v4}/32
+DNS = 1.1.1.1, 1.0.0.1
 MTU = 1280
 
 [Peer]
 PublicKey = ${data.config.peers[0].public_key}
-AllowedIPs = 0.0.0.0/0, ::/0
-Endpoint = engage.cloudflareclient.com:2408
+AllowedIPs = 0.0.0.0/0
+Endpoint = ${endpoint}
 `;
 
 // Generate Reserved Parameter Dynamically
@@ -125,12 +141,10 @@ const generateReserved = (clientId) =>
         .join('%2C');
 
 // Generate V2Ray URL
-const generateV2RayURL = (privateKey, publicKey, ipv4, ipv6, reserved) =>
-    `wireguard://${encodeURIComponent(privateKey)}@engage.cloudflareclient.com:2408?address=${encodeURIComponent(
+const generateV2RayURL = (privateKey, publicKey, ipv4, reserved, endpoint) =>
+    `wireguard://${encodeURIComponent(privateKey)}@${endpoint}?address=${encodeURIComponent(
         ipv4 + '/32'
-    )},${encodeURIComponent(ipv6 + '/128')}&reserved=${reserved}&publickey=${encodeURIComponent(
-        publicKey
-    )}&mtu=1420#V2ray-Config`;
+    )}&reserved=${reserved}&publickey=${encodeURIComponent(publicKey)}&mtu=1420#V2ray-Config`;
 
 // Update DOM with Configurations
 const updateDOM = (container, title, textareaId, content, messageId) => {
@@ -154,7 +168,7 @@ const hideSpinner = () => {
 };
 
 // Handle Copy Button Click
-const handleCopyButtonClick = async function(e) {
+const handleCopyButtonClick = async function () {
     const targetId = this.getAttribute('data-target');
     const messageId = this.getAttribute('data-message');
     try {
@@ -187,11 +201,11 @@ const showPopup = (message, type = 'success') => {
     const popup = document.createElement('div');
     popup.className = 'popup-message';
     popup.textContent = message;
-    
+
     if (type === 'error') {
         popup.style.backgroundColor = '#d32f2f';
     }
-    
+
     document.body.appendChild(popup);
     setTimeout(() => {
         if (popup.parentNode) {
@@ -232,17 +246,13 @@ const downloadConfig = (fileName, content) => {
 // Check for viewport size changes
 function checkViewportSize() {
     if (window.innerWidth <= 480) {
-        // For very small screens
         container.style.padding = '15px';
     } else if (window.innerWidth <= 768) {
-        // For small screens
         container.style.padding = '20px';
     } else {
-        // For larger screens
         container.style.padding = '32px';
     }
 }
 
-// Run on page load and when window is resized
 window.addEventListener('load', checkViewportSize);
 window.addEventListener('resize', checkViewportSize);
