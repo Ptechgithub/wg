@@ -106,6 +106,7 @@ const generateConfig = async (data, privateKey) => {
         privateKey,
         data.config.peers[0].public_key,
         data.config.interface.addresses.v4,
+        data.config.interface.addresses.v6,
         reserved,
         endpoint
     );
@@ -123,13 +124,13 @@ const generateConfig = async (data, privateKey) => {
 const generateWireGuardConfig = (data, privateKey, endpoint) => `
 [Interface]
 PrivateKey = ${privateKey}
-Address = ${data.config.interface.addresses.v4}/32
-DNS = 1.1.1.1, 1.0.0.1
+Address = ${data.config.interface.addresses.v4}/32, ${data.config.interface.addresses.v6}/128
+DNS = 1.1.1.1, 1.0.0.1, 2606:4700:4700::1111, 2606:4700:4700::1001
 MTU = 1280
 
 [Peer]
 PublicKey = ${data.config.peers[0].public_key}
-AllowedIPs = 0.0.0.0/0
+AllowedIPs = 0.0.0.0/0, ::/0
 Endpoint = ${endpoint}
 `;
 
@@ -141,10 +142,10 @@ const generateReserved = (clientId) =>
         .join('%2C');
 
 // Generate V2Ray URL
-const generateV2RayURL = (privateKey, publicKey, ipv4, reserved, endpoint) =>
+const generateV2RayURL = (privateKey, publicKey, ipv4, ipv6, reserved, endpoint) =>
     `wireguard://${encodeURIComponent(privateKey)}@${endpoint}?address=${encodeURIComponent(
         ipv4 + '/32'
-    )}&reserved=${reserved}&publickey=${encodeURIComponent(publicKey)}&mtu=1420#V2ray-Config`;
+    )},${encodeURIComponent(ipv6 + '/128')}&reserved=${reserved}&publickey=${encodeURIComponent(publicKey)}&mtu=1420#V2ray-Config`;
 
 // Update DOM with Configurations
 const updateDOM = (container, title, textareaId, content, messageId) => {
