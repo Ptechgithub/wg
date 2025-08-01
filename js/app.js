@@ -344,7 +344,7 @@ const generateRandomString = (length) =>
 
 const downloadConfig = (fileName, content) => {
     const element = document.createElement('a');
-    const file = new Blob([content], { type: 'text/plain' });
+    const file = new Blob([content], { type: 'application/octet-stream' });
     element.href = URL.createObjectURL(file);
     element.download = fileName;
     document.body.appendChild(element);
