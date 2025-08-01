@@ -1,33 +1,130 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WireGuard Config Manager</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <meta name="description" content="Free WireGuard configuration generator for secure VPN connection">
+    <title>Awesome Config Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta name="description" content="Generate secure VPN configurations for WireGuard, Amnezia-Wg, and V2Ray.">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlroVzLz8T90W55s2x6e5B1g3w+a/96p/5p5X9G20p9r9m9z5y1D1z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2z2s.fa-solid {
+            font-size: 1.2rem;
+            margin-right: 0.5rem;
+            width: 1.2rem; /* Ensure consistent width */
+            text-align: center;
+        }
+        /* Message visibility controlled by JS */
+        .message.invisible {
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .message.visible {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Ensure tab panels transition smoothly */
+        .tab-panel.hidden {
+            display: none;
+        }
+        .tab-panel.active {
+            display: block;
+            animation: fadeIn 0.3s ease-out; /* Simple fade in for tab content */
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Specific height for V2Ray textarea */
+        #v2rayBox {
+            min-height: 96px; /* 24 * 4px = 96px for h-24 */
+        }
+
+        /* Initial state for config-box opacity, will be set to opacity-100 by JS for transition */
+        .config-box {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .config-box.opacity-100 {
+            opacity: 1;
+        }
+
+        /* Custom scrollbar for webkit browsers (Dark Mode Default) */
+        .tab-content-container::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        .tab-content-container::-webkit-scrollbar-track {
+            background: #2d3748; /* Darker track for dark mode */
+            border-radius: 10px;
+        }
+        .tab-content-container::-webkit-scrollbar-thumb {
+            background: #4a5568; /* Slightly lighter thumb */
+            border-radius: 10px;
+        }
+        .tab-content-container::-webkit-scrollbar-thumb:hover {
+            background: #6b7280;
+        }
+    </style>
 </head>
-<body>
-    <main class="container">
-        <header>
-            <h1>WireGuard Config Generator</h1>
-            <button class="get-btn">Get Free Config</button>
+<body class="font-poppins flex items-center justify-center min-h-screen p-4 sm:p-2 transition-colors duration-500
+          bg-gradient-to-br from-gray-950 to-purple-900 text-gray-200">
+    <main class="container bg-zinc-800 p-8 rounded-2xl shadow-2xl w-full max-w-2xl mx-auto relative overflow-hidden ring-1 ring-inset ring-gray-700 md:p-6 sm:p-4 transition-colors duration-500">
+
+        <header class="mb-8 text-center relative">
+            <h1 class="text-4xl font-extrabold text-blue-400 mb-4 sm:text-3xl transition-colors duration-500">Awesome Config Generator</h1>
+            <p class="text-gray-400 text-lg sm:text-base transition-colors duration-500">Generate secure VPN configurations for free!</p>
+
+            <!-- Dark Mode Toggle Button REMOVED -->
+
+            <!-- Main action button -->
+            <button class="get-btn mt-6 w-full py-3 px-6 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold rounded-lg shadow-lg hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition-all duration-300 transform hover:scale-105">
+                <i class="fas fa-wrench mr-2"></i> Get Free Config
+            </button>
         </header>
 
-        <section class="wire-guard-config"></section>
-        
-        <button class="download-btn">Download Config</button>
-        
-        <section class="v2ray-config"></section>
-        
-        <button class="telegram">
-            <a href="https://t.me/P_Tech2024" target="_blank" rel="noopener noreferrer">Telegram: @P_Tech2024</a>
-        </button>
+        <!-- Tabs Container -->
+        <div class="tabs-container mt-8">
+            <!-- Tab Buttons -->
+            <div class="tabs-header flex justify-center border-b border-gray-700 transition-colors duration-500">
+                <button class="tab-button flex-1 py-3 text-lg font-semibold text-gray-400 border-b-4 border-transparent hover:border-blue-500 hover:text-blue-300 transition-all duration-200 cursor-pointer sm:text-base" data-tab="wireguard" id="wireguardTab">WireGuard</button>
+                <button class="tab-button flex-1 py-3 text-lg font-semibold text-gray-400 border-b-4 border-transparent hover:border-blue-500 hover:text-blue-300 transition-all duration-200 cursor-pointer sm:text-base" data-tab="amnezia" id="amneziaTab">Amnezia-Wg</button>
+                <button class="tab-button flex-1 py-3 text-lg font-semibold text-gray-400 border-b-4 border-transparent hover:border-blue-500 hover:text-blue-300 transition-all duration-200 cursor-pointer sm:text-base" data-tab="v2ray" id="v2rayTab">V2Ray</button>
+            </div>
+
+            <!-- Tab Content Panels -->
+            <div class="tab-content-container mt-6 p-6 rounded-lg shadow-inner bg-zinc-900 overflow-y-auto max-h-[400px] sm:p-4 transition-colors duration-500">
+                <div id="wireguard-panel" class="tab-panel active">
+                    <section class="wire-guard-config"></section>
+                </div>
+                <div id="amnezia-panel" class="tab-panel hidden">
+                    <section class="amnezia-wg-config"></section>
+                </div>
+                <div id="v2ray-panel" class="tab-panel hidden">
+                    <section class="v2ray-config"></section>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-10 text-center">
+            <!-- Telegram button -->
+            <button class="telegram py-3 px-8 bg-blue-500 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-300 transition-colors duration-300 flex items-center justify-center space-x-2 mx-auto">
+                <a href="https://t.me/P_Tech2024" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center text-white no-underline">
+                    <i class="fab fa-telegram-plane text-xl mr-2"></i>
+                    <span>Telegram: @P_Tech2024</span>
+                </a>
+            </button>
+        </div>
     </main>
 
-    <div class="spinner" style="display: none;"></div>
+    <!-- Spinner overlay -->
+    <div class="spinner fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border-4 border-gray-600 border-t-blue-400 rounded-full w-10 h-10 z-50" style="display: none;"></div>
 
     <script src="js/app.js"></script>
-</body>
+    </body>
 </html>
