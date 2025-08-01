@@ -230,8 +230,8 @@ const generateV2RayURL = (privateKey, publicKey, ipv4, ipv6, reserved, endpoint)
     )}&mtu=1420#V2ray-Config`;
 
 const updateDOM = (container, title, textareaId, content, messageId) => {
-    const fileName = title.replace(/\s/g, '') + '.conf';
-
+    const fileName = title.replace(/[\s-]/g, '') + '.conf';
+    
 
     const buttonBaseClasses = "w-full sm:w-auto py-2 px-4 font-semibold rounded-lg cursor-pointer text-base my-2 mx-1 shadow-md focus:outline-none focus:ring-2 focus:ring-opacity-75 transition-all duration-200 flex items-center justify-center";
 
